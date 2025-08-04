@@ -1,0 +1,25 @@
+.upgrade-root {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(50, 50, 50, 0.7);
+    border-radius: 12px;
+}
+
+.stat-label {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+    -unity-font-style: bold;
+}
+
+.upgrade-button {
+    width: 140px;
+    height: 45px;
+    font-size: 18px;
+    background-color: rgb(80, 120, 80);
+    color: white;
+    border-radius: 8px;
+    -unity-font-style: bold;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         editor-extension-mode="False">
+    
+    <Style src="HeroView.uss" />
+
+    <ui:VisualElement name="Root" class="upgrade-root">
+        <ui:Label name="Level_text" class="stat-label" text="Level: 1" />
+        <ui:Label name="Strength_text" class="stat-label" text="Strength: 10" />
+        <ui:Button name="Upgrade_button" class="upgrade-button" text="Улучшить" />
+    </ui:VisualElement>
+</ui:UXML>
