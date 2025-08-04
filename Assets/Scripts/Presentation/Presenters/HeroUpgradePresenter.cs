@@ -2,6 +2,7 @@ using System;
 using Assets.Domain.Models;
 using Assets.Domain.Messages;
 using Assets.Application.UseCases;
+using Assets.Infrastructure.Configs;
 using Assets.Presentation.Views;
 using MessagePipe;
 using R3;
@@ -14,6 +15,7 @@ namespace Assets.Presentation.Presenters
         private readonly HeroModel _heroModel;
         private readonly UpgradeHeroUseCase _upgradeUseCase;
         private readonly IPublisher<UpgradeHeroDTO> _publisher;
+        private readonly HeroUpgradeConfigSO _config;
 
         private IDisposable _levelSub;
         private IDisposable _healthSub;
@@ -23,12 +25,14 @@ namespace Assets.Presentation.Presenters
             HeroUpgradeView view,
             HeroModel heroModel,
             UpgradeHeroUseCase upgradeUseCase,
-            IPublisher<UpgradeHeroDTO> publisher)
+            IPublisher<UpgradeHeroDTO> publisher,
+            HeroUpgradeConfigSO config)
         {
             _view = view;
             _heroModel = heroModel;
             _upgradeUseCase = upgradeUseCase;
             _publisher = publisher;
+            _config = config;
         }
 
         public void Start()
@@ -52,8 +56,8 @@ namespace Assets.Presentation.Presenters
             _publisher.Publish(new UpgradeHeroDTO
             {
                 Level = 1,
-                Health = 10,
-                Strength = 2
+                Health = _config.HealthPerLevel,
+                Strength = _config.StrengthPerLevel
             });
         }
 
