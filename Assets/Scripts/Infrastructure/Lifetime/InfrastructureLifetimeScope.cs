@@ -1,30 +1,37 @@
 using Assets.Domain.Models;
-using Assets.Infrastructure.Configs;
 using Assets.Domain.Messages;
-using MessagePipe;
+using Assets.Domain.Configs;
+using Assets.Infrastructure.Configs;
+using Assets.Application.UseCases;
+using Assets.Presentation.Views;
+using Assets.Presentation.Presenters;
 using VContainer;
 using VContainer.Unity;
+using MessagePipe;
 using UnityEngine;
 
-public class InfrastructureLifetimeScope : LifetimeScope
+namespace Assets.Infrastructure.LifetimeScopes
 {
-    [SerializeField] private HeroUpgradeConfigSO _upgradeConfig;
-
-    protected override void Configure(IContainerBuilder builder)
+    public class InfrastructureLifetimeScope : LifetimeScope
     {
-        Debug.Log("[InfrastructureLifetimeScope] Configure");
+        [SerializeField] private HeroUpgradeConfigSO _upgradeConfig;
+        [SerializeField] private HeroUpgradeView _heroUpgradeView;
 
-        var options = builder.RegisterMessagePipe();
-        Debug.Log("[InfrastructureLifetimeScope] RegisterMessagePipe done");
+        protected override void Configure(IContainerBuilder builder)
+        {
+            var heroModel = new HeroModel();
+            builder.RegisterInstance(heroModel);
 
-        builder.RegisterMessageBroker<UpgradeHeroDTO>(options);
-        Debug.Log("[InfrastructureLifetimeScope] RegisterMessageBroker<UpgradeHeroDTO> done");
+            var options = builder.RegisterMessagePipe();
+            builder.RegisterMessageBroker<UpgradeHeroDTO>(options);
 
-        builder.RegisterInstance(_upgradeConfig);
-        Debug.Log("[InfrastructureLifetimeScope] RegisterInstance(HeroUpgradeConfigSO) done");
+            builder.RegisterInstance<IHeroUpgradeConfig>(_upgradeConfig);
 
-        var heroModel = new HeroModel();
-        builder.RegisterInstance(heroModel);
-        Debug.Log("[InfrastructureLifetimeScope] RegisterInstance(HeroModel) done");
+            builder.RegisterEntryPoint<UpgradeHeroUseCase>();
+            builder.RegisterEntryPoint<HeroUpgradePresenter>();
+
+            builder.RegisterComponent(_heroUpgradeView);
+        }
     }
+
 }

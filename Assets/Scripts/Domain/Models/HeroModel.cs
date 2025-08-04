@@ -8,11 +8,11 @@ namespace Assets.Domain.Models
         public ReactiveProperty<int> Health { get; } = new();
         public ReactiveProperty<int> Strength { get; } = new();
 
-        public HeroModel(int initialLevel = 1, int initialHealth = 100, int initialStrength = 10)
+        public HeroModel()
         {
-            Level.Value = initialLevel;
-            Health.Value = initialHealth;
-            Strength.Value = initialStrength;
+            Level.Value = 1; // Initial Values
+            Health.Value = 100;
+            Strength.Value = 10;
         }
     }
 }
