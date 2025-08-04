@@ -1,9 +1,9 @@
 using System;
-using Cysharp.Threading.Tasks;
 using Assets.Domain.Models;
 using Assets.Domain.Messages;
 using Assets.Infrastructure.Configs;
 using MessagePipe;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.Application.UseCases
@@ -24,19 +24,16 @@ namespace Assets.Application.UseCases
 
         public void Start()
         {
-            _subscription = _subscriber.Subscribe(async data =>
+            Debug.Log("[UpgradeHeroUseCase] Start subscribing to UpgradeHeroDTO");
+
+            _subscription = _subscriber.Subscribe(data =>
             {
-                await ExecuteAsync(data);
+                Debug.Log($"[UpgradeHeroUseCase] Received Upgrade: Lvl +{data.Level}, HP +{data.Health}, Str +{data.Strength}");
+
+                _hero.Level.Value += data.Level;
+                _hero.Health.Value += data.Health;
+                _hero.Strength.Value += data.Strength;
             });
-        }
-
-        public UniTask ExecuteAsync(UpgradeHeroDTO upgradeData)
-        {
-            _hero.Level.Value += upgradeData.Level;
-            _hero.Health.Value += upgradeData.Health;
-            _hero.Strength.Value += upgradeData.Strength;
-
-            return UniTask.CompletedTask;
         }
 
         public void Dispose()

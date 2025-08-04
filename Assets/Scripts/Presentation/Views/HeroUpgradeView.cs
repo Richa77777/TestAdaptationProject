@@ -20,6 +20,8 @@ namespace Assets.Presentation.Views
             _healthLabel = _root.Q<Label>("Health_text");
             _strengthLabel = _root.Q<Label>("Strength_text");
             _upgradeButton = _root.Q<Button>("Upgrade_button");
+
+            _upgradeButton.clicked += () => Debug.Log("[HeroUpgradeView] Upgrade button clicked");
         }
 
         public void Show() => _root.style.display = DisplayStyle.Flex;
