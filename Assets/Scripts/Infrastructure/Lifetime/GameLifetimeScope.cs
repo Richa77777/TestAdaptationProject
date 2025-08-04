@@ -21,10 +21,10 @@ namespace Assets.Infrastructure.Lifetime
 
             builder.Register<MessageBroker<UpgradeHeroDTO>>(VContainer.Lifetime.Singleton);
 
-            builder.Register<IPublisher<UpgradeHeroDTO>>(c => 
+            builder.Register<IPublisher<UpgradeHeroDTO>>(c =>
                 c.Resolve<MessageBroker<UpgradeHeroDTO>>(), VContainer.Lifetime.Singleton);
 
-            builder.Register<ISubscriber<UpgradeHeroDTO>>(c => 
+            builder.Register<ISubscriber<UpgradeHeroDTO>>(c =>
                 c.Resolve<MessageBroker<UpgradeHeroDTO>>(), VContainer.Lifetime.Singleton);
         }
     }
